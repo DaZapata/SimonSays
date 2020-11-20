@@ -7,6 +7,7 @@
       body {
         margin: 0;
         background: #dedede;
+        /*background-image: url(./assets/jero.jpg);*/
         display: flex;
         align-items: center;
         height: 100vh;
@@ -90,12 +91,13 @@
     </style>
   </head>
   <body>
+      
     <div class="gameboard">
       <div id="celeste" class="color celeste left" data-color="celeste"></div>
       <div id="violeta" class="color violeta right" data-color="violeta"></div>
       <div id="naranja" class="color naranja left" data-color="naranja"></div>
       <div id="verde" class="color verde right" data-color="verde"></div>
-      <button id="btnEmpezar" class="btn-start" onclick="empezarJuego()">Empezar a jugar!</button>
+      <button id="btnEmpezar" class="btn-start" onclick="empezarJuego()">Jerónimo empieza a jugar!</button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
@@ -104,7 +106,7 @@
         const naranja = document.getElementById('naranja')
         const verde = document.getElementById('verde')
         const btnEmpezar=document.getElementById('btnEmpezar')
-        const ULTIMO_NIVEL = 10
+        const ULTIMO_NIVEL = 3
 
         
         class Juego{
@@ -210,7 +212,24 @@
                 this.iluminarColor(nombreColor)
                 if (numeroColor === this.secuencia[this.subnivel]){
                     this.subnivel++
-                    if (this.subnivel === this.nivel){
+                    if (this.subnivel === this.nivel){ 
+                        this.subesDeNivel()
+                        // this.nivel++
+                        // this.eliminarEventosClick()
+                        // if (this.nivel === (ULTIMO_NIVEL + 1)){
+                        //     this.ganoElJuego()
+                        // } else {
+                        //     setTimeout(this.siguienteNivel, 1500)
+                        // }
+                    }
+                } else {
+                    this.perdioElJuego()
+                }
+            }
+
+            subesDeNivel() {
+                swal('Muy bien Jero', `Siguiente nivel: ${this.nivel + 1}`, 'success')
+                    .then(() => {
                         this.nivel++
                         this.eliminarEventosClick()
                         if (this.nivel === (ULTIMO_NIVEL + 1)){
@@ -218,20 +237,17 @@
                         } else {
                             setTimeout(this.siguienteNivel, 1500)
                         }
-                    }
-                } else {
-                    this.perdioElJuego()
-                }
+                    })
             }
 
             ganoElJuego() {
-                swal('Simon Game', 'Felicitaciones, Ganaste!!', 'success')
+                swal('Felicitaciones', 'Jerónimo, Ganaste!!', 'success')
                     .then(() => {
                         this.inicializar()
                     })
             }
             perdioElJuego() {
-                swal('Simon Game', 'lo lamentamos, Perdiste :(', 'error')
+                swal('Jerito', `Lo lamentamos, Perdiste en el nivel: ${this.nivel} :(`, 'error')
                     .then(() => {
                         this.eliminarEventosClick()
                         this.inicializar()
